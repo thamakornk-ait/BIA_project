@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .goback {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="goback">Back</a>
+    <div class="container">
+        <h1>Default Payment Detection System</h1>
+        <form method="post" action="/detection">
+            <label for="sex">Sex:</label>
+            <input type="text" id="sex" name="sex" required><br>
+            
+            <label for="education">Education:</label>
+            <input type="text" id="education" name="education" required><br>
+            
+            <label for="marriage">Marriage:</label>
+            <input type="text" id="marriage" name="marriage" required><br>
+            
+            <label for="payment">Payment:</label>
+            <input type="text" id="payment" name="payment" required><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
