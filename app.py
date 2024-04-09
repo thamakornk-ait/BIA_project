@@ -9,10 +9,13 @@ def home():
 @app.route('/detection', methods=['GET', 'POST'])
 def detection():
     if request.method == 'POST':
-        # Handle form submission here
-        # For example, you can access form data using request.form['fieldname']
         pass
     return render_template('detection.html')
+
+@app.route('/dashboard')
+def dashboard():
+
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

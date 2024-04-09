@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .nav-links {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999; /* Ensure the links appear on top of the iframe */
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://app.powerbi.com/reportEmbed?reportId=38cd8a02-ba49-41b4-8fd6-0a41905049e3&autoAuth=true&ctid=96e7b82d-bfbf-4ce0-87c2-77981e8ab6b9" frameborder="0" allowFullScreen="true"></iframe>
+    <div class="nav-links">
+        <a href="/">Home</a> |
+        <a href="/detection">Detection Page</a>
+    </div>
+</body>
+</html>
