@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <style>
+        /* Add CSS for notification styling */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification">
+        <p id="notification-message"></p>
+    </div>
+
+    <script>
+        // JavaScript to handle notification
+        function showNotification(message) {
+            var notification = document.querySelector('.notification');
+            var notificationMessage = document.getElementById('notification-message');
+            notificationMessage.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 3000); // Hide notification after 3 seconds
+        }
+    </script>
+</body>
+</html>

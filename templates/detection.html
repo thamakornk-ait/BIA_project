@@ -12,6 +12,7 @@
             padding: 0;
         }
         .container {
+            position: relative; /* Make the container relative to position the link */
             max-width: 600px;
             margin: 50px auto;
             background-color: #fff;
@@ -58,13 +59,31 @@
             text-decoration: none;
             color: #007bff;
         }
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: none; /* Initially hidden */
+        }
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <a href="/" class="goback">Back</a>
     <div class="container">
+        
         <h1>Default Payment Detection System</h1>
-        <form method="post" action="/detection">
+        <form id="detection-form" method="post" action="/detection">
             <label for="sex">Sex:</label>
             <input type="text" id="sex" name="sex" required><br>
             
@@ -79,9 +98,55 @@
             
             <input type="submit" value="Submit">
         </form>
-        
+
+        <!-- Notification container -->
+        <div class="notification" id="notification">
+            <span class="close-button" onclick="closeNotification()">&times;</span>
+            <p id="notification-message"></p>
+        </div>
 
         <p>View Dashboard: <a href="/dashboard">Dashboard</a></p>
     </div>
+
+    <!-- JavaScript for showing notification -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('detection-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Fetch form data
+                var formData = new FormData(form);
+
+                // Send form data via AJAX to Flask route
+                fetch('/detection', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Show notification if detection is caught
+                    if (data.message) {
+                        showNotification(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+
+        // Function to show notification
+        function showNotification(message) {
+            var notification = document.getElementById('notification');
+            var notificationMessage = document.getElementById('notification-message');
+            notificationMessage.textContent = message;
+            notification.style.display = 'block';
+        }
+
+        // Function to close notification
+        function closeNotification() {
+            var notification = document.getElementById('notification');
+            notification.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
