@@ -76,6 +76,15 @@
             right: 10px;
             cursor: pointer;
         }
+
+        label,
+        input[type="radio"],
+        input[type="text"] {
+            display: inline-block;
+            vertical-align: left;
+ 
+        }
+
     </style>
 </head>
 <body>
@@ -84,22 +93,66 @@
         
         <h1>Default Payment Detection System</h1>
         <form id="detection-form" method="post" action="/detection">
+            <label for="limit_balance">Limit Balance:</label>
+            <input type="text" id="limit_balance" name="limit_balance" required><br>
+
             <label for="sex">Sex:</label>
-            <input type="text" id="sex" name="sex" required><br>
+            <input type="radio" id="male" name="sex" value=0 required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="sex" value=1 required>
+            <label for="female">Female</label><br>
             
             <label for="education">Education:</label>
-            <input type="text" id="education" name="education" required><br>
+            <input type="radio" id="graduate" name="education" value=0 required>
+            <label for="graduate">Graduate</label>
+            <input type="radio" id="university" name="education" value=0 required>
+            <label for="university">University</label>
+            <input type="radio" id="highschool" name="education" value=1 required>
+            <label for="highschool">High School</label>
+            <input type="radio" id="others" name="education" value=0 required>
+            <label for="others">Others</label><br>
             
             <label for="marriage">Marriage:</label>
-            <input type="text" id="marriage" name="marriage" required><br>
+            <input type="radio" id="married" name="marriage" value=1 required>
+            <label for="married">married</label>
+            <input type="radio" id="divorce" name="marriage" value=2 required>
+            <label for="divorce">divorce</label>
+            <input type="radio" id="single" name="marriage" value=3 required>
+            <label for="single">single</label>
+            <input type="radio" id="others" name="marriage" value=0 required>
+            <label for="others">others</label>
+            <br>
             
-            <label for="payment">Payment:</label>
-            <input type="text" id="payment" name="payment" required><br>
+            <label for="pay0">Pay0:</label>
+            <input type="text" id="pay0" name="pay0" required><br>
+            
+            <label for="bii_amt0">Bii_amt0:</label>
+            <input type="text" id="bii_amt0" name="bii_amt0" required><br>
+            
+            <label for="pay_amt1">Pay_amt1:</label>
+            <input type="text" id="pay_amt1" name="pay_amt1" required><br>
+            
+            <label for="pay_amt2">Pay_amt2:</label>
+            <input type="text" id="pay_amt2" name="pay_amt2" required><br>
+            
+            <label for="pay_amt3">Pay_amt3:</label>
+            <input type="text" id="pay_amt3" name="pay_amt3" required><br>
+            
+            <label for="pay_amt4">Pay_amt4:</label>
+            <input type="text" id="pay_amt4" name="pay_amt4" required><br>
+            
+            <label for="pay_amt5">Pay_amt5:</label>
+            <input type="text" id="pay_amt5" name="pay_amt5" required><br>
+            
+            <label for="pay_amt6">Pay_amt6:</label>
+            <input type="text" id="pay_amt6" name="pay_amt6" required><br>
             
             <input type="submit" value="Submit">
         </form>
 
-        <!-- Notification container -->
+        {% if not detection_caught %}
+            <p>This person is not a defaulter.</p>
+        {% endif %}
         <div class="notification" id="notification">
             <span class="close-button" onclick="closeNotification()">&times;</span>
             <p id="notification-message"></p>
@@ -108,24 +161,18 @@
         <p>View Dashboard: <a href="/dashboard">Dashboard</a></p>
     </div>
 
-    <!-- JavaScript for showing notification -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById('detection-form');
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent default form submission
-
-                // Fetch form data
                 var formData = new FormData(form);
-
-                // Send form data via AJAX to Flask route
                 fetch('/detection', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Show notification if detection is caught
                     if (data.message) {
                         showNotification(data.message);
                     }
@@ -133,16 +180,12 @@
                 .catch(error => console.error('Error:', error));
             });
         });
-
-        // Function to show notification
         function showNotification(message) {
             var notification = document.getElementById('notification');
             var notificationMessage = document.getElementById('notification-message');
             notificationMessage.textContent = message;
             notification.style.display = 'block';
         }
-
-        // Function to close notification
         function closeNotification() {
             var notification = document.getElementById('notification');
             notification.style.display = 'none';
