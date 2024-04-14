@@ -114,19 +114,33 @@
             
             <label for="marriage">Marriage:</label>
             <input type="radio" id="married" name="marriage" value=1 required>
-            <label for="married">married</label>
-            <input type="radio" id="divorce" name="marriage" value=2 required>
-            <label for="divorce">divorce</label>
-            <input type="radio" id="single" name="marriage" value=3 required>
-            <label for="single">single</label>
+            <label for="married">Married</label>
+            <input type="radio" id="single" name="marriage" value=2 required>
+            <label for="single">Single</label>
+            <input type="radio" id="divorce" name="marriage" value=3 required>
+            <label for="divorce">Divorce</label>
             <input type="radio" id="others" name="marriage" value=0 required>
-            <label for="others">others</label>
+            <label for="others">Others</label>
             <br>
             
             <label for="pay0">Pay0:</label>
-            <input type="text" id="pay0" name="pay0" required><br>
+            <select id="pay0" name="pay0">
+                    <option value=-2>No comsumption</option>
+                    <option value=-1>Paid in full</option>
+                    <option value=0>The use of revolving credit</option>
+                    <option value=1>1 month payment delay</option>
+                    <option value=2>2 month payment delay</option>
+                    <option value=3>3 month payment delay</option>
+                    <option value=4>4 month payment delay</option>
+                    <option value=5>5 month payment delay</option>
+                    <option value=6>6 month payment delay</option>
+                    <option value=7>7 month payment delay</option>
+                    <option value=8>8 month payment delay</option>
+                    <option value=9>9 and above month payment delay</option>
+            </select>
+            <br>
             
-            <label for="bii_amt0">Bii_amt0:</label>
+            <label for="bii_amt0">Bill_amt0:</label>
             <input type="text" id="bii_amt0" name="bii_amt0" required><br>
             
             <label for="pay_amt1">Pay_amt1:</label>
@@ -152,6 +166,8 @@
 
         {% if not detection_caught %}
             <p>This person is not a defaulter.</p>
+        {% else %}
+            <p>This person is a defaulter.</p>
         {% endif %}
         <div class="notification" id="notification">
             <span class="close-button" onclick="closeNotification()">&times;</span>

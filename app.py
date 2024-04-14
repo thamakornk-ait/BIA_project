@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-import joblib, pandas as pd
+import joblib
+import pandas as pd
+import pickle
 app = Flask(__name__)
 model = joblib.load('model_with_feature-selection_one-hot/model_with_downsampling/best_random_forest_model.pkl')
 @app.route('/')
@@ -35,13 +37,18 @@ def detection():
         PAY_AMT5 = request.form['pay_amt5']
         PAY_AMT6 = request.form['pay_amt6']
 
+        scaler = pickle.load(open('model_with_feature-selection_one-hot/model_with_downsampling/scaler.pkl', 'rb'))
+        [LIMIT_BAL, BILL_AMT1, PAY_AMT1, PAY_AMT2,PAY_AMT3,PAY_AMT4,PAY_AMT5,PAY_AMT6]  \
+            = scaler.transform([[LIMIT_BAL, BILL_AMT1, PAY_AMT1, PAY_AMT2,PAY_AMT3,PAY_AMT4,PAY_AMT5,PAY_AMT6]])[0]
+        
+
         data = {
             'LIMIT_BAL': float(LIMIT_BAL),
-            'SEX': float(SEX),
-            'EDUCATION_3': float(EDUCATION_3),
+            'SEX': SEX,
+            'EDUCATION_3': EDUCATION_3,
             'MARRIAGE_1': MARRIAGE_1,
             'MARRIAGE_3': MARRIAGE_3,
-            'PAY_0': float(PAY_0),
+            'PAY_0': PAY_0,
             'BILL_AMT1': float(BILL_AMT1),
             'PAY_AMT1': float(PAY_AMT1),
             'PAY_AMT2': float(PAY_AMT2),
@@ -53,8 +60,10 @@ def detection():
         
         X = pd.DataFrame(data, index=[0])
         ypred = model.predict(X)
+        preds = model.predict_proba(X)
 
         print("Prediction:", ypred)
+        print("Percentage of default %.2f"%(preds[0][1]*100)+"%")
 
         detection_caught = False
         if ypred == 1:
