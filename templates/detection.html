@@ -166,8 +166,8 @@
 
         {% if not detection_caught %}
             <p>This person is not a defaulter.</p>
-        <!-- {% else %}
-            <p>This person is a defaulter.</p> -->
+        {% else %}
+            <p>This person is a defaulter.</p>
         {% endif %}
         <div class="notification" id="notification">
             <span class="close-button" onclick="closeNotification()">&times;</span>
