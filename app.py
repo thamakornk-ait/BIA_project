@@ -5,7 +5,6 @@ import pickle
 app = Flask(__name__)
 model = joblib.load('model_with_feature-selection_one-hot/model_with_downsampling/best_random_forest_model.pkl')
 @app.route('/')
-#comment
 def home():
     return render_template('homepage.html')
 
