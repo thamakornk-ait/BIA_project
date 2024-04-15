@@ -162,12 +162,14 @@
             <input type="text" id="pay_amt6" name="pay_amt6" required><br>
             
             <input type="submit" value="Submit">
+
         </form>
-        {% if not detection_caught %}
+        <!-- {% if not detection_caught %}
             <p>This person is not a defaulter.</p>
         {% else %}
             <p>This person is a defaulter.</p>
-        {% endif %}
+        {% endif %} -->
+        
         <div class="notification" id="notification">
             <span class="close-button" onclick="closeNotification()">&times;</span>
             <p id="notification-message"></p>
@@ -188,13 +190,18 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.message) {
+                    if (data.detection_caught === true) {
                         showNotification(data.message);
+                    } else {
+                        var messageDiv = document.createElement('div');
+                        messageDiv.textContent = data.message;
+                        form.appendChild(messageDiv);
                     }
                 })
                 .catch(error => console.error('Error:', error));
             });
         });
+
         function showNotification(message) {
             var notification = document.getElementById('notification');
             var notificationMessage = document.getElementById('notification-message');
@@ -205,6 +212,7 @@
             var notification = document.getElementById('notification');
             notification.style.display = 'none';
         }
+        
     </script>
 </body>
 </html>
