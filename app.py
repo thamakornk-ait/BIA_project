@@ -64,13 +64,15 @@ def detection():
         print("Prediction:", ypred)
         print("Percentage of default %.2f"%(preds[0][1]*100)+"%")
 
-        detection_caught = True if ypred[0] == 1 else False
+        detection_caught = True if preds[0][1] >= 0.75 else False
         print(detection_caught)
-        if detection_caught:
-            return jsonify({'message': 'This person is defaulter', 'detection_caught': True})
+        if preds[0][1] >= 0.70:
+            message = 'High probability of default! (prob: %.2f%%)' % (preds[0][1] * 100)
+        elif preds[0][1] >= 0.30 and preds[0][1] <70:
+            message = 'Average probability of default (prob: %.2f%%)' % (preds[0][1] * 100)
         else:
-            # return render_template('detection.html', detection_caught=detection_caught)
-            return jsonify({'message': 'This person is not a defaulter', 'detection_caught': False})
+            message = 'Low probability of default (prob: %.2f%%)' % (preds[0][1] * 100)
+        return jsonify({'message': message, 'detection_caught': detection_caught})
         
     return render_template('detection.html')
 @app.route('/dashboard')
