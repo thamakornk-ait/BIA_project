@@ -177,6 +177,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById('detection-form');
+            var messageDiv = document.createElement('div'); // Create a message div outside the event listener
+
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent default form submission
                 var formData = new FormData(form);
@@ -186,10 +188,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    // Clear previous message before displaying the new one
+                    messageDiv.textContent = '';
                     if (data.detection_caught === true) {
                         showNotification(data.message);
                     } else {
-                        var messageDiv = document.createElement('div');
                         messageDiv.textContent = data.message;
                         form.appendChild(messageDiv);
                     }
@@ -208,7 +211,7 @@
             var notification = document.getElementById('notification');
             notification.style.display = 'none';
         }
-        
+            
     </script>
 </body>
 </html>
